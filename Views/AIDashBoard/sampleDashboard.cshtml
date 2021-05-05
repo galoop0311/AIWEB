@@ -1,0 +1,105 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>sampleDashboard</title>
+    <script src="~/assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
+
+    <!--Normal-->
+    
+    <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet" />    
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+    <table id="employeeTable" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>EMPLOYEEID</th>
+                <th>NAME</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Age</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody id="data">
+        </tbody>
+    </table>
+
+    <table id="trainingTable" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>狀態</th>
+                <th>任務名稱</th>
+                <th>演算法名稱</th>
+                <th>作者</th>
+                <th>新增時間</th>
+            </tr>
+        </thead>
+        <tbody id="data">
+        </tbody>
+    </table>
+
+
+
+</body>
+<script>
+    $(document).ready(function () {
+        $("#employeeTable").DataTable(
+            {
+                "ajax": {
+                    "url": "/AIDashBoard/getList",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "EMPLOYEEID" },
+                    { "data": "NAME" },
+                    { "data": "Position" },
+                    { "data": "Office" },
+                    { "data": "Age" },
+                    { "data": "Salary" }
+                ],
+                "columnDefs": [
+                    {
+                        "className": "dt-body-center",
+                        "targets": "_all"
+                    }
+                ]
+            });
+
+        $("#trainingTable").DataTable(
+            {
+                "ajax": {
+                    "url": "/AIDashBoard/getTrainingData",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "STATUS" },
+                    { "data": "TaskName" },
+                    { "data": "ALGORITHMNO" },                    
+                    { "data": "UserName" },
+                    { "data": "CREATETIME" }
+                ],
+                "columnDefs": [
+                    {
+                        "className": "dt-body-center",
+                        "targets": "_all"
+                    }
+                ]
+            });
+
+
+
+
+    });
+    function loadTable() {
+        $("#employeeTable").DataTable({});
+    }
+</script>
+</html>
